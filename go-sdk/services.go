@@ -6342,7 +6342,7 @@ type ComputePyDepsLimits struct {
 
 // PyDepsLimits reads the current py_deps.* limits. When the deployment has not
 // surfaced the py_deps configuration view the backend returns 503
-// LIMITS_UNAVAILABLE, surfaced as an *Error; callers treat that as "feature
+// ErrLimitsUnavailable, surfaced as an *Error; callers treat that as "feature
 // off" rather than inventing a default.
 func (s *ComputeService) PyDepsLimits(ctx context.Context) (*ComputePyDepsLimits, error) {
 	var out ComputePyDepsLimits

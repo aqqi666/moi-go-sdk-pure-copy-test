@@ -108,7 +108,7 @@ func TestRunnerSDKPreservesPublicError(t *testing.T) {
 		status int
 		code   string
 	}{
-		{400, "INVALID_PARAMS"}, {404, "RUNNER_NOT_FOUND"}, {409, "RUNNER_NAME_CONFLICT"}, {409, "RUNNER_IAM_REQUEST_CONFLICT"}, {503, "RUNNER_IAM_UNAVAILABLE"},
+		{400, "ErrParamInvalid"}, {404, "ErrRunnerNotFound"}, {409, "ErrRunnerNameConflict"}, {409, "ErrRunnerIamRequestConflict"}, {503, "ErrRunnerIamUnavailable"},
 	} {
 		t.Run(test.code, func(t *testing.T) {
 			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {

@@ -3485,7 +3485,7 @@ func TestWorkspaceMemberInviteGitHubLoginTransport(t *testing.T) {
 		requests = append(requests, body)
 		if name, _ := body["name"].(string); name == "unknown" {
 			w.WriteHeader(http.StatusNotFound)
-			_ = json.NewEncoder(w).Encode(map[string]any{"code": "USER_NOT_FOUND", "msg": "Invitation account not found"})
+			_ = json.NewEncoder(w).Encode(map[string]any{"code": "ErrUserNotFound", "msg": "Invitation account not found"})
 			return
 		}
 		_ = json.NewEncoder(w).Encode(map[string]any{"code": "OK", "msg": "OK", "data": map[string]any{"id": "canonical-user-2"}})
@@ -3510,7 +3510,7 @@ func TestWorkspaceMemberInviteGitHubLoginTransport(t *testing.T) {
 	}
 	rejected, err := members.Invite(t.Context(), "unknown", 10, WithUserGithubLogin("new-user"), WithUserRoleIDs(10))
 	var apiError *Error
-	if !errors.As(err, &apiError) || apiError.Code != "USER_NOT_FOUND" || apiError.Status != http.StatusNotFound || apiError.Message != "Invitation account not found" || rejected.GetId() != "" {
+	if !errors.As(err, &apiError) || apiError.Code != "ErrUserNotFound" || apiError.Status != http.StatusNotFound || apiError.Message != "Invitation account not found" || rejected.GetId() != "" {
 		t.Fatalf("unknown GitHub account: result = %#v, error = %v", rejected, err)
 	}
 	wantRequests := []map[string]any{
